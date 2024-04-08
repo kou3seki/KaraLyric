@@ -1,15 +1,19 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
-    - CheckDisplayUI
-    - CheckPanelUI
-    - CheckPointItem
-    - ColorSelectUI
-    - LyricPlayUI
-    - PhoneticDisplayUI
-    - PhoneticItem
-    - PhoneticText
-    - SentenceItem
+    - PhoneticTableEditUI
+    - ver2.CheckDisplayUI
+    - ver2.CheckPointItem
+    - ver2.ColorSelectUI
+    - ver2.FileOperationUI
+    - ver2.LyricPlayItem
+    - ver2.LyricPlayUI
+    - ver2.MainUI
+    - ver2.PhoneticDisplayUI
+    - ver2.PhoneticItem
+    - ver2.PhoneticText
+    - ver2.PlayControlUI
+    - ver2.SentenceItem
     DOTween.dll:
     - DG.Tweening.Core.DOTweenSettings
     Unity.2D.Animation.Editor.dll:
@@ -59,60 +63,68 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 48
       Script: {instanceID: 0}
+    - Class: 49
+      Script: {instanceID: 0}
     - Class: 81
       Script: {instanceID: 0}
     - Class: 82
       Script: {instanceID: 0}
-    - Class: 83
-      Script: {instanceID: 0}
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 1486}
+      Script: {instanceID: 1512}
     - Class: 114
-      Script: {instanceID: 1488}
+      Script: {instanceID: 1514}
     - Class: 114
-      Script: {instanceID: 1490}
+      Script: {instanceID: 1516}
     - Class: 114
-      Script: {instanceID: 1510}
+      Script: {instanceID: 1536}
     - Class: 114
-      Script: {instanceID: 1676}
+      Script: {instanceID: 1786}
     - Class: 114
-      Script: {instanceID: 1750}
+      Script: {instanceID: 2022}
     - Class: 114
-      Script: {instanceID: 2464}
+      Script: {instanceID: 2618}
     - Class: 114
-      Script: {instanceID: 2662}
+      Script: {instanceID: 2746}
     - Class: 114
-      Script: {instanceID: 2724}
+      Script: {instanceID: 2920}
     - Class: 114
-      Script: {instanceID: 2826}
+      Script: {instanceID: 2956}
     - Class: 114
-      Script: {instanceID: 3044}
+      Script: {instanceID: 2992}
     - Class: 114
-      Script: {instanceID: 3100}
+      Script: {instanceID: 3154}
     - Class: 114
-      Script: {instanceID: 3182}
+      Script: {instanceID: 3166}
     - Class: 114
-      Script: {instanceID: 3290}
+      Script: {instanceID: 3214}
     - Class: 114
-      Script: {instanceID: 3404}
+      Script: {instanceID: 3426}
     - Class: 114
-      Script: {instanceID: 3632}
+      Script: {instanceID: 3548}
     - Class: 114
-      Script: {instanceID: 3708}
+      Script: {instanceID: 3766}
     - Class: 114
-      Script: {instanceID: 3792}
+      Script: {instanceID: 3788}
     - Class: 114
-      Script: {instanceID: 3852}
+      Script: {instanceID: 3870}
     - Class: 114
-      Script: {instanceID: 4806}
+      Script: {instanceID: 3960}
     - Class: 114
-      Script: {instanceID: 5066}
+      Script: {instanceID: 4022}
     - Class: 114
-      Script: {instanceID: 5296}
+      Script: {instanceID: 4090}
     - Class: 114
-      Script: {instanceID: 5442}
+      Script: {instanceID: 4606}
+    - Class: 114
+      Script: {instanceID: 4970}
+    - Class: 114
+      Script: {instanceID: 5732}
+    - Class: 114
+      Script: {instanceID: 5932}
+    - Class: 114
+      Script: {instanceID: 6016}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -152,7 +164,7 @@ ScriptsOnlyBuild:
       serializedVersion: 2
       Hash: 2eb2c9698472381f017e6dcf981b5132
     assemblyName: Assembly-CSharp.dll
-    namespaceName: 
+    namespaceName: ver2
     className: SentenceItem
   - hash:
       serializedVersion: 2
@@ -184,12 +196,6 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Toggle
-  - hash:
-      serializedVersion: 2
-      Hash: d48e8b07d9dc9cfa68bfb156fb4ee161
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: PhoneticText
   - hash:
       serializedVersion: 2
       Hash: 59ce5902048c1041729c804e2772b2ce
@@ -234,6 +240,12 @@ ScriptsOnlyBuild:
     className: TMP_FontAsset
   - hash:
       serializedVersion: 2
+      Hash: d48e8b07d9dc9cfa68bfb156fb4ee161
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: ver2
+    className: PhoneticText
+  - hash:
+      serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -264,28 +276,22 @@ ScriptsOnlyBuild:
     className: RawImage
   - hash:
       serializedVersion: 2
-      Hash: d77791909058b1fbee7ef3e5f4f03834
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: CheckPanelUI
-  - hash:
-      serializedVersion: 2
       Hash: cfdd0010efd7b54c2b7512656dbc9119
     assemblyName: Unity.2D.IK.Runtime.dll
     namespaceName: UnityEngine.U2D.IK
     className: IKManager2D
   - hash:
       serializedVersion: 2
+      Hash: eb2576c342a301436bedd437cc6a828c
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: ver2
+    className: FileOperationUI
+  - hash:
+      serializedVersion: 2
       Hash: a1aa98c78061c6f03a8c124cda576e67
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: CanvasScaler
-  - hash:
-      serializedVersion: 2
-      Hash: 1fab2339f4f2961c1a52a078af186e12
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: LyricPlayUI
   - hash:
       serializedVersion: 2
       Hash: cf9f5cf2c3145a37ac07f00e50e460f9
@@ -318,10 +324,22 @@ ScriptsOnlyBuild:
     className: TimelineAsset
   - hash:
       serializedVersion: 2
+      Hash: 7de8de7ea50f4e71c77fce347fd962b7
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PhoneticTableEditUI
+  - hash:
+      serializedVersion: 2
       Hash: 760787567e1b60d64a3e421ab83ee14a
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TextMeshProUGUI
+  - hash:
+      serializedVersion: 2
+      Hash: c2f8936088ff85cc8a64fac7ba8e35f5
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: ver2
+    className: PhoneticDisplayUI
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -334,6 +352,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: GraphicRaycaster
+  - hash:
+      serializedVersion: 2
+      Hash: 0430f15f52a178f7987a15013a056e83
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: ver2
+    className: CheckDisplayUI
   - hash:
       serializedVersion: 2
       Hash: f40fedccd4adbc76605bea6d67537e4b
@@ -366,10 +390,10 @@ ScriptsOnlyBuild:
     className: TestResultRendererCallback
   - hash:
       serializedVersion: 2
-      Hash: 9b65e99e0749e66ef883802134263ca8
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: ColorSelectUI
+      Hash: 49101319b21043357cb80c5aba043e1d
+    assemblyName: Unity.Recorder.dll
+    namespaceName: UnityEngine.Recorder
+    className: RecorderBindings
   - hash:
       serializedVersion: 2
       Hash: 748dd2a2a28da4e618912da5ac45684b
@@ -426,6 +450,12 @@ ScriptsOnlyBuild:
     className: TextContainer
   - hash:
       serializedVersion: 2
+      Hash: 07ccc210c36e149eb96762bfd3798fbd
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: ver2
+    className: PlayControlUI
+  - hash:
+      serializedVersion: 2
       Hash: 8aa3d6ccbcb54ee8db6c1229854adaaa
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -472,6 +502,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.EventSystems
     className: BaseInput
+  - hash:
+      serializedVersion: 2
+      Hash: e27901627b4d69bc0344e0ee7b889b15
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: ver2
+    className: MainUI
   - hash:
       serializedVersion: 2
       Hash: 18c222bef9ae745ce69ddde9b74337ca
@@ -552,6 +588,12 @@ ScriptsOnlyBuild:
     className: SignalTrack
   - hash:
       serializedVersion: 2
+      Hash: cf6706df41eeeadca3346fe51dea6d47
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: ver2
+    className: PhoneticItem
+  - hash:
+      serializedVersion: 2
       Hash: 523ce309f50d9eee6a8fc0e2f86c9c97
     assemblyName: Unity.2D.SpriteShape.Runtime.dll
     namespaceName: 
@@ -606,6 +648,12 @@ ScriptsOnlyBuild:
     className: RectMask2D
   - hash:
       serializedVersion: 2
+      Hash: cc9e7bc570426b9dad413037bf1b298c
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: ver2
+    className: LyricPlayItem
+  - hash:
+      serializedVersion: 2
       Hash: 87ad3705a58f19c47136728d4a6e9c47
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
@@ -616,12 +664,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.2D.Animation.Runtime.dll
     namespaceName: UnityEngine.U2D.Animation
     className: SpriteSkinEntity
-  - hash:
-      serializedVersion: 2
-      Hash: c0dcb7cf101ef4b3cb443aa6b944b74a
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: PhoneticDisplayUI
   - hash:
       serializedVersion: 2
       Hash: 28cfb4bd305dd11c6326cc3ee7c14138
@@ -642,12 +684,6 @@ ScriptsOnlyBuild:
     className: TMP_SubMeshUI
   - hash:
       serializedVersion: 2
-      Hash: 3e7138fb955b625209f37ce26e7db25b
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: CheckPointItem
-  - hash:
-      serializedVersion: 2
       Hash: fd68d84f33fad85aac38f2739c0ee270
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
@@ -660,22 +696,16 @@ ScriptsOnlyBuild:
     className: TMP_ScrollbarEventHandler
   - hash:
       serializedVersion: 2
-      Hash: 6c767f6b9d62eb95ae6a14b30d5a6450
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: CheckDisplayUI
-  - hash:
-      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Unity.2D.Animation.Runtime.dll
     namespaceName: UnityEngine.U2D.Animation
     className: BufferManager
   - hash:
       serializedVersion: 2
-      Hash: cf6706df41eeeadca3346fe51dea6d47
+      Hash: 68a6f89028eca9bd5fe02c3429090192
     assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: PhoneticItem
+    namespaceName: ver2
+    className: ColorSelectUI
   - hash:
       serializedVersion: 2
       Hash: 8220b46879dc5e37db1b940c938f5744
@@ -702,11 +732,23 @@ ScriptsOnlyBuild:
     className: TouchInputModule
   - hash:
       serializedVersion: 2
+      Hash: 3e7138fb955b625209f37ce26e7db25b
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: ver2
+    className: CheckPointItem
+  - hash:
+      serializedVersion: 2
       Hash: 762a30c8d779b11af16ed9ce1f2d32fa
     assemblyName: Unity.2D.IK.Runtime.dll
     namespaceName: UnityEngine.U2D.IK
     className: FabrikSolver2D
+  - hash:
+      serializedVersion: 2
+      Hash: 54aba5cc41f725604a43e2a659c8c4ba
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: ver2
+    className: LyricPlayUI
   platform: 19
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
-  playerPath: D:/KaraLyric/Tool/KaraLyric.exe
+  playerPath: D:/myProject/ProjiecBuild/KaraLyric.exe

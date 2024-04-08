@@ -4,237 +4,138 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LyricPlayUI : MonoBehaviour
+namespace ver2
 {
-    [SerializeField] GameObject checkPanelUI;
-    [SerializeField] AudioSource audioSource;
-    [SerializeField] Text[] texts;
-    [SerializeField] RectTransform[] bars;
-    [SerializeField] RectTransform[] phoneticGo;
-    public RectTransform poolContent;
-    RectTransform curTextWidth;
-
-    bool isPlaying;
-
-    //进度条控制变量
-    List<CheckPoint> checkPoints;
-    int curSentenceIndex;
-    int nextCheckIndex;
-    int curMaxCheckIndex;
-    float nextCheckStartTime;
-    float nextCheckEndTime;
-    float nextCheckPos;
-    bool barMoving;
-    bool[] needDisappear;
-
-    //歌词顺序显示控制变量
-    int nextSentenceIndex;
-    float nextSentenceTime;
-    int textIndex;
-    int barIndex;
-
-    public Sentence[] sentenceInfos;
-
-    PhoneticText[] phoneticTexts;
-    public GameObject phoneticTextGo;
-
-    // Start is called before the first frame update
-    void Start()
+    public class LyricPlayUI : MonoBehaviour
     {
-        phoneticTexts = new PhoneticText[20];
-        for (int i = 0; i < 20; i++)
-        {
-            GameObject temp = Instantiate(phoneticTextGo, poolContent);
-            phoneticTexts[i] = temp.GetComponent<PhoneticText>();
-            phoneticTexts[i].lyricPlayUI = this;
-            temp.SetActive(false);
-        }
-    }
+        [HideInInspector] public MainUI mainUI;
+        [SerializeField] AudioSource audioSource;
+        public RectTransform poolContent;
+        public GameObject phoneticTextGo;
 
-    // Update is called once per frame
-    void Update()
-    {
-        //点击任意键退出播放
-        if (Input.anyKeyDown)
+        //歌词顺序显示控制参数
+        int nextSentenceIndex;
+        float nextSentenceTime;
+        int playIndex;
+
+        public Sentence[] sentenceInfos;
+        [SerializeField] GameObject[] lyricPlayItemGos;
+        LyricPlayItem[] lyricPlayItems;
+
+        [SerializeField] Text musicName;
+        [SerializeField] Text vocal;
+        [SerializeField] Text album;
+
+        // Start is called before the first frame update
+        void Start()
         {
-            audioSource.Stop();
-            isPlaying = false;
-            checkPanelUI.SetActive(true);
+            for (int i = 0; i < 40; i++)
+            {
+                GameObject temp = Instantiate(phoneticTextGo, poolContent);
+                temp.GetComponent<PhoneticText>().lyricPlayUI = this;
+                temp.SetActive(false);
+            }
+
+            lyricPlayItems = new LyricPlayItem[2];
+            lyricPlayItems[0] = lyricPlayItemGos[0].GetComponent<LyricPlayItem>();
+            lyricPlayItems[0].lyricPlayUI = this;
+            lyricPlayItems[1] = lyricPlayItemGos[1].GetComponent<LyricPlayItem>();
+            lyricPlayItems[1].lyricPlayUI = this;
+
             gameObject.SetActive(false);
+        }
 
-            int temp1 = phoneticGo[0].childCount;
-            for (int j = 0; j < temp1; j++)
+        // Update is called once per frame
+        void Update()
+        {
+            //点击任意键退出播放
+            if (Input.anyKeyDown)
             {
-                phoneticGo[0].GetChild(0).GetComponent<PhoneticText>().Clear();
-            }
-            temp1 = phoneticGo[1].childCount;
-            for (int j = 0; j < temp1; j++)
-            {
-                phoneticGo[1].GetChild(0).GetComponent<PhoneticText>().Clear();
-            }
-        }
-
-        LyricDisplay();
-    }
-
-    public void StartPlay()
-    {
-        //进度条初始化
-        texts[0].text = "";
-        texts[1].text = "";
-        bars[0].anchoredPosition = new Vector2(-1000, 0);
-        bars[1].anchoredPosition = new Vector2(-1000, 0);
-
-        //进度条控制变量初始化
-        audioSource.time = 0;
-        curSentenceIndex = 0;
-        nextCheckIndex = 0;
-        checkPoints = sentenceInfos[curSentenceIndex].checkPoints;
-        curMaxCheckIndex = checkPoints.Count;
-        SetNextCheck();
-        barMoving = false;
-        needDisappear = new bool[2];
-        needDisappear[0] = false;
-        needDisappear[1] = false;
-
-        //歌词顺序显示控制变量初始化
-        nextSentenceIndex = 0;
-        nextSentenceTime = sentenceInfos[nextSentenceIndex].checkPoints[0].startTime / 1000f - 1;
-        textIndex = 0;
-        barIndex = 0;
-        curTextWidth = texts[barIndex].GetComponent<RectTransform>();
-
-        //开始播放
-        audioSource.Play();
-        isPlaying = true;
-    }
-
-    //根据当前的checkPoints和nextCheckIndex确定下一个check的结束时间
-    public void SetNextCheck()
-    {
-        nextCheckStartTime = checkPoints[nextCheckIndex].startTime / 1000f - 0.3f;
-        if (nextCheckIndex + 1 < curMaxCheckIndex)
-        {
-            //若不为本句最后一个check，则结束时间为下一个check的开始时间
-            nextCheckEndTime = checkPoints[nextCheckIndex + 1].startTime / 1000f - 0.3f;
-        }
-        else
-        {
-            //若为本句最后一个check，则结束时间为该check结束
-            nextCheckEndTime = checkPoints[nextCheckIndex].endTime / 1000f - 0.3f;
-        }
-        nextCheckPos = checkPoints[nextCheckIndex].pos;
-    }
-
-    public void LyricDisplay()
-    {
-        //如果不再播放状态或歌词已遍历完毕，则不进行操作
-        if (!isPlaying || curSentenceIndex >= sentenceInfos.Length)
-        {
-            return;
-        }
-
-        //如果歌曲播放到下一句歌词开始时间，则显示下一句歌词
-        if(nextSentenceTime <= audioSource.time && nextSentenceIndex < sentenceInfos.Length)
-        {
-            texts[textIndex].text = sentenceInfos[nextSentenceIndex].content;
-            bars[textIndex].gameObject.GetComponent<Image>().color = sentenceInfos[nextSentenceIndex].color;
-
-            foreach(Phonetic phonetic in sentenceInfos[nextSentenceIndex].phonetics)
-            {
-                PhoneticText temp = poolContent.GetChild(0).GetComponent<PhoneticText>();
-                temp.Init(phonetic.content, phonetic.pos * 1.33f, sentenceInfos[nextSentenceIndex].color, phoneticGo[textIndex]);
+                FinishPlay("");
             }
 
-            nextSentenceIndex++;
-
-            if (nextSentenceIndex < sentenceInfos.Length)
-            {
-                nextSentenceTime = sentenceInfos[nextSentenceIndex].checkPoints[0].startTime/1000f - 1;
-                textIndex = 1 - textIndex;
-            }
+            LyricDisplay();
         }
 
-        //如果到达下一个check的开始时间，则初始化进度条移动
-        if(nextCheckStartTime <= audioSource.time && !barMoving)
+        public void SetMusicInfo(string musicName, string vocal, string album)
         {
-            Tween temp = bars[barIndex].DOAnchorPos(new Vector2(nextCheckPos * 1.33f - 1000 + curTextWidth.rect.width/2, 0), nextCheckEndTime - nextCheckStartTime);
-            temp.OnComplete(OnCheckEnd);
-            barMoving = true;
-            nextCheckIndex++;
-
-            //如果到达每句歌词末尾，则需延时清空歌词，并将curSentenceIndex移至下一句歌词
-            if (nextCheckIndex >= curMaxCheckIndex)
+            if (!musicName.Equals(""))
             {
-                needDisappear[barIndex] = true;
-                curSentenceIndex++;
+                this.musicName.gameObject.SetActive(true);
+                this.musicName.text = "曲名：" + musicName;
+            }
+            else this.musicName.gameObject.SetActive(false);
+            if (!vocal.Equals(""))
+            {
+                this.musicName.gameObject.SetActive(true);
+                this.vocal.text = "演唱：" + vocal;
+            }
+            else this.vocal.gameObject.SetActive(false);
+            if (!album.Equals(""))
+            {
+                this.album.gameObject.SetActive(true);
+                this.album.text = "专辑：" + album;
+            }
+            else this.album.gameObject.SetActive(false);
+        }
 
-                //如果到达歌曲末尾，则停止播放
-                if (curSentenceIndex >= sentenceInfos.Length)
+        public void StartPlay()
+        {
+            if (sentenceInfos.Length == 0)
+            {
+                FinishPlay("当前无歌词");
+                return;
+            }
+
+            //进度条初始化
+            lyricPlayItems[0].Clear();
+            lyricPlayItems[1].Clear();
+            audioSource.time = 0;
+
+            //歌词顺序显示控制参数初始化
+            nextSentenceIndex = 0;
+            while (sentenceInfos[nextSentenceIndex].checkPoints.Count == 0)
+            {
+                nextSentenceIndex++;
+                if (nextSentenceIndex >= sentenceInfos.Length)
                 {
-                    isPlaying = false;
-                    int temp1 = phoneticGo[0].childCount;
-                    for (int j = 0; j < temp1; j++)
-                    {
-                        phoneticGo[0].GetChild(0).GetComponent<PhoneticText>().Clear();
-                    }
-                    temp1 = phoneticGo[1].childCount;
-                    for (int j = 0; j < temp1; j++)
-                    {
-                        phoneticGo[1].GetChild(0).GetComponent<PhoneticText>().Clear();
-                    }
+                    FinishPlay("当前无任何歌词进度信息");
                     return;
                 }
-
-                //载入下一句歌词的check信息
-                nextCheckIndex = 0;
-                barIndex = 1 - barIndex; 
-                curTextWidth = texts[barIndex].GetComponent<RectTransform>();
-                checkPoints = sentenceInfos[curSentenceIndex].checkPoints;
-                curMaxCheckIndex = checkPoints.Count;
             }
-            SetNextCheck();
-        }
-    }
+            nextSentenceTime = sentenceInfos[nextSentenceIndex].checkPoints[0].startTime / 1000f - 1;
 
-    //进度条在每一个check结束后的回调
-    public void OnCheckEnd()
-    {
-        barMoving = false;
-
-        //如果该句歌词需要消失，此时当前歌词一定在另一个分区
-        if (needDisappear[0])
-        {
-            Tween temp = transform.DOScale(new Vector3(1, 1, 1), 0.2f);
-            temp.OnComplete(delegate
-            {
-                texts[0].text = "";
-                bars[0].anchoredPosition = new Vector2(-1000, 0);
-
-                int temp = phoneticGo[0].childCount;
-                for (int i = 0; i < temp; i++)
-                {
-                    phoneticGo[0].GetChild(0).GetComponent<PhoneticText>().Clear();
-                }
-                needDisappear[0] = false;
-            });
+            //开始播放
+            audioSource.Play();
         }
 
-        if (needDisappear[1])
+        public void FinishPlay(string log)
         {
-            Tween temp = transform.DOScale(new Vector3(1, 1, 1), 0.2f);
-            temp.OnComplete(delegate
-            {
-                texts[1].text = "";
-                bars[1].anchoredPosition = new Vector2(-1000, 0);
+            audioSource.Stop();
+            MainUI.SetLog(log);
+            mainUI.gameObject.SetActive(true);
+            gameObject.SetActive(false);
+        }
 
-                int temp = phoneticGo[1].childCount;
-                for (int i = 0; i < temp; i++)
+        void LyricDisplay()
+        {
+            //如果歌曲播放到下一句歌词开始时间，则显示下一句歌词
+            if (nextSentenceTime <= audioSource.time && nextSentenceIndex < sentenceInfos.Length)
+            {
+                lyricPlayItems[playIndex].SetLyric(sentenceInfos[nextSentenceIndex]);
+                playIndex = 1 - playIndex;
+
+                nextSentenceIndex++;
+                while (nextSentenceIndex < sentenceInfos.Length && sentenceInfos[nextSentenceIndex].checkPoints.Count == 0)
                 {
-                    phoneticGo[1].GetChild(0).GetComponent<PhoneticText>().Clear();
+                    nextSentenceIndex++;
                 }
-                needDisappear[1] = false;
-            });
+                
+                if (nextSentenceIndex < sentenceInfos.Length)
+                {
+                    nextSentenceTime = sentenceInfos[nextSentenceIndex].checkPoints[0].startTime / 1000f - 1;
+                }
+            }
         }
     }
 }

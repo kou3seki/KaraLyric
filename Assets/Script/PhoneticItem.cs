@@ -5,63 +5,73 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class PhoneticItem : MonoBehaviour, IPointerClickHandler
+namespace ver2
 {
-    [HideInInspector] public PhoneticDisplayUI phoneticDisplayUI;
-    public Text text;
-    public int pos;
-
-    // Start is called before the first frame update
-    void Start()
+    public class PhoneticItem : MonoBehaviour, IPointerClickHandler
     {
-        
-    }
+        [HideInInspector] public PhoneticDisplayUI phoneticDisplayUI;
+        public Text text;
+        public int pos;
+        Image image;
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    public void Init(int pos)
-    {
-        gameObject.SetActive(true);
-        transform.SetAsLastSibling();
-        SetPos(pos);
-    }
-
-    public void Init(int pos, string content)
-    {
-        gameObject.SetActive(true);
-        transform.SetAsLastSibling();
-        SetPos(pos);
-        text.text = content;
-    }
-
-    public void Clear()
-    {
-        gameObject.SetActive(false);
-        text.text = "";
-        SetPos(0);
-        transform.SetAsFirstSibling();
-    }
-
-    public void SetPos(int pos)
-    {
-        this.pos = pos;
-        gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(pos, 0);
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        if (eventData.button == PointerEventData.InputButton.Right)
+        // Start is called before the first frame update
+        void Awake()
         {
-            Clear();
+            image = GetComponent<Image>();
         }
-        else if (eventData.button == PointerEventData.InputButton.Left)
+
+        // Update is called once per frame
+        void Update()
         {
-            phoneticDisplayUI.inputField.ActivateInputField();
-            phoneticDisplayUI.current = this;
+
+        }
+
+        public void Init(int pos)
+        {
+            gameObject.SetActive(true);
+            transform.SetAsLastSibling();
+            SetPos(pos);
+        }
+
+        public void Init(int pos, string content)
+        {
+            gameObject.SetActive(true);
+            transform.SetAsLastSibling();
+            SetPos(pos);
+            text.text = content;
+        }
+
+        public void Clear()
+        {
+            gameObject.SetActive(false);
+            text.text = "";
+            SetPos(0);
+            transform.SetAsFirstSibling();
+        }
+
+        public void SetPos(int pos)
+        {
+            this.pos = pos;
+            gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(pos, 0);
+        }
+
+        public void SetIsActive(bool active)
+        {
+            if (!active) image.color = new Color(0.4f, 0.4f, 0.4f);
+            else image.color = new Color(0.9f, 0.9f, 0.9f);
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (eventData.button == PointerEventData.InputButton.Right)
+            {
+                Clear();
+            }
+            else if (eventData.button == PointerEventData.InputButton.Left)
+            {
+                phoneticDisplayUI.SetCurrentInput(this);
+            }
         }
     }
+
 }
